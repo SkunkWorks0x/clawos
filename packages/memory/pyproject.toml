@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "totalreclaw"
+version = "0.1.0"
+description = "Persistent memory + reflection for OpenClaw agents. Your agents never forget."
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = []
+
+[project.urls]
+Homepage = "https://x.com/SkunkWorks0x"
+
+[tool.setuptools.packages.find]
+include = ["totalreclaw*"]
+exclude = ["tests*"]

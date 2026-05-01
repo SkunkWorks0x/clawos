@@ -1,0 +1,11 @@
+{
+  "name": "@clawos/dashboard",
+  "version": "0.0.1",
+  "private": true,
+  "description": "ClawOS dashboard — Next.js 15 control plane (placeholder).",
+  "scripts": {
+    "dev": "echo '[clawos/dashboard] dev placeholder — Next.js 15 setup pending'",
+    "build": "echo '[clawos/dashboard] build placeholder — Next.js 15 setup pending'",
+    "test": "echo '[clawos/dashboard] tests pending' && exit 0"
+  }
+}

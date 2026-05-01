@@ -1,0 +1,23 @@
+node_modules/
+dist/
+.venv/
+venv/
+*.egg-info/
+__pycache__/
+*.pyc
+.pytest_cache/
+.clawos/agent.key
+*.db
+.env
+.env.*
+.env.local
+.DS_Store
+*.log
+# Claude Code local settings (personal, not project-level)
+**/.claude/settings.local.json
+out/
+cache/
+broadcast/
+artifacts/
+.next/
+.turbo/

@@ -1,0 +1,33 @@
+{
+  "name": "clawos",
+  "version": "0.0.1",
+  "private": true,
+  "description": "ClawOS — the AI operating system for companies.",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.29.3",
+  "scripts": {
+    "test": "pnpm test:memory && pnpm test:security && pnpm test:policy && pnpm test:credentials && pnpm test:orchestrator",
+    "test:memory": "pnpm --filter @clawos/memory test",
+    "test:security": "pnpm --filter @clawos/security test",
+    "test:policy": "pnpm --filter @clawos/policy test",
+    "test:credentials": "pnpm --filter @clawos/credentials test",
+    "test:orchestrator": "pnpm --filter @clawos/orchestrator test",
+    "build": "pnpm -r --if-present run build",
+    "demo": "node packages/cli/bin/clawos.cjs demo",
+    "clawos": "node packages/cli/bin/clawos.cjs",
+    "dev": "pnpm --filter @clawos/dashboard dev"
+  },
+  "devDependencies": {
+    "@clawos/cli": "workspace:*"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild",
+      "bufferutil",
+      "utf-8-validate"
+    ]
+  }
+}

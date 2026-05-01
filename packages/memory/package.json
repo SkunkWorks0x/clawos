@@ -1,0 +1,9 @@
+{
+  "name": "@clawos/memory",
+  "version": "0.0.1",
+  "private": true,
+  "description": "TotalReclaw — persistent memory + reflection for ClawOS agents.",
+  "scripts": {
+    "test": ".venv/bin/pytest"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "name": "@clawos/policy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ClawSteward — pre-signing policy enforcement gate for AI agent transactions.",
+  "author": "ClawStack <https://clawstack.dev>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SkunkWorks0x/clawsteward"
+  },
+  "keywords": ["defi", "defai", "ai-agents", "policy-enforcement", "solana", "mcp", "security", "reputation"],
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/lib.js",
+  "types": "dist/lib.d.ts",
+  "bin": {
+    "clawsteward": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc && cp src/db/schema.sql dist/db/schema.sql",
+    "dev": "tsx src/index.ts",
+    "serve": "tsx src/index.ts serve",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "dashboard": "cd dashboard && next dev",
+    "dashboard:build": "cd dashboard && next build",
+    "dashboard:test": "cd dashboard && vitest run",
+    "test:devnet": "vitest run test/devnet/ --no-file-parallelism",
+    "demo:devnet": "npx tsx test/devnet/demo.ts",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@solana/web3.js": "^1.95.0",
+    "better-sqlite3": "^11.0.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
+    "uuid": "^10.0.0",
+    "zod": "^4.3.6",
+    "zod-to-json-schema": "^3.25.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/node": "^22.0.0",
+    "@types/uuid": "^10.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

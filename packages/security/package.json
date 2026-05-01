@@ -1,0 +1,25 @@
+{
+  "name": "@clawos/security",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sentinel — zero-dependency security scanner for AI agent configurations.",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "bin": {
+    "clawstack-sentinel": "./dist/src/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "audit": "node dist/src/cli.js audit",
+    "test": "node --test dist/test/**/*.test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["security", "scanner", "openclaw", "clawstack"],
+  "author": "ClawStack",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.11.0"
+  },
+  "dependencies": {}
+}

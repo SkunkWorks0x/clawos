@@ -1,0 +1,6 @@
+{
+  "name": "test-openclaw-project",
+  "version": "1.0.0",
+  "description": "A test OpenClaw project with intentional vulnerabilities",
+  "main": "index.js"
+}

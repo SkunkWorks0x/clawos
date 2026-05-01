@@ -1,0 +1,22 @@
+{
+  "name": "@clawos/orchestrator",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Multi-agent swarm coordination for ClawOS.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@clawos/security": "workspace:*",
+    "@clawos/policy": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0",
+    "vitest": "^2.0.0"
+  }
+}
