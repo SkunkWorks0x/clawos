@@ -104,7 +104,7 @@ Verifiable credential management for AI agents. Ed25519 cryptographic signing wi
 
 ### [@clawos/orchestrator](./packages/orchestrator/)
 
-Multi-agent swarm coordination with role-based access control. Direct async calls to TypeScript packages, stdio JSON shim to Python memory. Shared control plane across all core services.
+Multi-agent control plane with role-based access control. Single-agent coordination shipped; parallel agent supervision planned for Q3 2026. Direct async calls to TypeScript packages, stdio JSON shim to Python memory. Shared control plane across all core services.
 
 `7 tests` · TypeScript · vitest
 
@@ -124,7 +124,7 @@ CLI entry point. `clawos init` generates an Ed25519 keypair, scaffolds default p
 
 **Agents have no guardrails.** Agents sign transactions without policy checks. ClawSteward enforces spending limits, allowlists, and approval flows — declaratively, before the signature happens.
 
-**Agents can't coordinate.** Multi-agent systems are duct-taped together with ad-hoc message passing. The orchestrator provides a shared control plane with role-based access across all four core services.
+**Agents can't coordinate.** Multi-agent systems are duct-taped together with ad-hoc message passing. The orchestrator provides a shared control plane with role-based access across all four core services. (Single-agent orchestration shipped. Multi-agent parallelism is the Q3 2026 milestone.)
 
 ## Project Structure
 
@@ -143,6 +143,17 @@ clawos/
 ├── VISION.md                # What, why, where it's going
 └── README.md                # ← You are here
 ```
+
+## History
+
+ClawOS v0.1 consolidates four independently-shipped packages into a unified kernel:
+
+- **TotalReclaw** — [90+ commits since Feb 2026](https://github.com/SkunkWorks0x/TotalReclaw)
+- **Sentinel** — [shipped March 2026](https://github.com/SkunkWorks0x/clawstack-sentinel)
+- **ClawSteward** — [shipped March 10, 2026](https://github.com/SkunkWorks0x/clawsteward)
+- **ClawU** — [deployed Base Sepolia March 21, 2026](https://github.com/SkunkWorks0x/ClawU)
+
+The monorepo unification and orchestrator layer are new as of May 2026.
 
 ## Docs
 
