@@ -8,6 +8,7 @@ import { runScan } from "./commands/scan.js";
 import { runInit, printInitResult } from "./commands/init.js";
 import { runDemo } from "./commands/demo.js";
 import { runStatus } from "./commands/status.js";
+import { runSwarmCommand } from "./commands/swarm.js";
 
 const here: string = dirname(fileURLToPath(import.meta.url));
 const pkg: { version: string } = JSON.parse(
@@ -53,6 +54,21 @@ program
   .description("Show the local ClawOS agent's pubkey, policy, and memory stats")
   .action(async () => {
     const code = await runStatus();
+    process.exit(code);
+  });
+
+program
+  .command("swarm")
+  .description("Run the multi-agent swarm with closed-loop reflection dispatch")
+  .option("-t, --task <task>", "Task description to decompose (defaults to demo task)")
+  .option("--quiet", "Suppress per-step output", false)
+  .option("--cadence <ms>", "Sleep between log lines (visual rhythm)")
+  .action(async (opts: { task?: string; quiet: boolean; cadence?: string }) => {
+    const code = await runSwarmCommand({
+      task: opts.task,
+      quiet: opts.quiet,
+      cadenceMs: opts.cadence ? Number.parseInt(opts.cadence, 10) : undefined,
+    });
     process.exit(code);
   });
 
