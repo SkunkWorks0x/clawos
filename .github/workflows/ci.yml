@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: pnpm test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install JS workspace (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build TypeScript packages
+        run: pnpm build
+
+      - name: Set up TotalReclaw venv
+        working-directory: packages/memory
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install --quiet -e .
+
+      - name: Test @clawos/memory (TotalReclaw)
+        run: pnpm test:memory
+
+      - name: Test @clawos/security (Sentinel)
+        run: pnpm test:security
+
+      - name: Test @clawos/policy (ClawSteward)
+        run: pnpm test:policy
+
+      - name: Test @clawos/credentials (ClawU)
+        run: pnpm test:credentials
+
+      - name: Test @clawos/orchestrator
+        run: pnpm test:orchestrator

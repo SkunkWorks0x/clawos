@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tests-928%20passing-brightgreen" alt="tests" />
+  <a href="https://github.com/SkunkWorks0x/clawos/actions/workflows/ci.yml"><img src="https://github.com/SkunkWorks0x/clawos/actions/workflows/ci.yml/badge.svg" alt="tests" /></a>
   <img src="https://img.shields.io/badge/failures-0-brightgreen" alt="failures" />
   <img src="https://img.shields.io/badge/packages-6-blue" alt="packages" />
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="license" />
