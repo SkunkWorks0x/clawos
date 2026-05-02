@@ -36,7 +36,7 @@ jobs:
         working-directory: packages/memory
         run: |
           python -m venv .venv
-          .venv/bin/pip install --quiet -e .
+          .venv/bin/pip install --quiet -e . pytest
 
       - name: Test @clawos/memory (TotalReclaw)
         run: pnpm test:memory
