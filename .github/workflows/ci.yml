@@ -25,6 +25,10 @@ jobs:
           python-version: "3.11"
 
       - uses: foundry-rs/foundry-toolchain@v1
+        env:
+          # foundryup hits the GitHub releases API; without auth it gets the
+          # 60 req/hr/IP rate limit and returns 403 on busy shared runners.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install JS workspace (frozen lockfile)
         run: pnpm install --frozen-lockfile
