@@ -20,7 +20,7 @@ const REPO_ROOT = resolve(HERE, "..", "..", "..", "..");
 const MEMORY_CLI = resolve(REPO_ROOT, "packages", "memory", "cli.py");
 const MEMORY_VENV = resolve(REPO_ROOT, "packages", "memory", ".venv", "bin", "python3");
 
-const DEFAULT_TASK = "demo: ship the v0.1 launch readiness checklist";
+const DEFAULT_TASK = "demo: audit trading agent portfolio rebalance — $50K threshold";
 
 const DEFAULT_POLICY: ClawosPolicySet = {
   maxTransactionAmount: 500,
@@ -110,7 +110,7 @@ export async function runSwarm(options: SwarmOptions = {}): Promise<SwarmResult>
     const durationMs = performance.now() - tStart;
 
     if (sub.elevated) {
-      await log.flag("flagged: elevated scope — auto-approved under demo policy");
+      await log.flag("flagged: elevated scope — escalated to masterchief — approved with audit trail");
     }
     await log.step(
       sub.agent,

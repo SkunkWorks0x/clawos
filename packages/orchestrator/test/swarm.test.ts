@@ -51,7 +51,7 @@ describe("swarm.registry", () => {
 
 describe("swarm.decompose", () => {
   it("routes the demo task to forge → blade → masterchief in order", () => {
-    const subtasks = decompose("demo: ship the v0.1 launch readiness checklist");
+    const subtasks = decompose("demo: audit trading agent portfolio rebalance — $50K threshold");
     expect(subtasks.length).toBeGreaterThanOrEqual(3);
     expect(subtasks[0]!.agent).toBe("forge");
     expect(subtasks[1]!.agent).toBe("blade");

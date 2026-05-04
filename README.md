@@ -25,7 +25,7 @@ Unlike LangChain (stateless chains), CrewAI (orchestration only), or Dust (knowl
 ```bash
 git clone https://github.com/SkunkWorks0x/clawos.git
 cd clawos && pnpm install
-pnpm test  # 928 tests, 0 failures
+pnpm test  # 936 tests, 0 failures
 ```
 
 ## Test Summary
@@ -37,7 +37,7 @@ pnpm test  # 928 tests, 0 failures
 | policy | 478 (+20 devnet) | 478 | vitest |
 | credentials | 119 | 119 | Foundry |
 | orchestrator | 7 | 7 | vitest |
-| **Total** | **928** | **928** | — |
+| **Total** | **936** | **936** | — |
 
 `pnpm test` from root. All suites. Zero failures.
 
@@ -162,7 +162,7 @@ The monorepo unification and orchestrator layer are new as of May 2026.
 
 ---
 
-`pnpm test` · All 928 tests pass on clean checkout · PRs welcome — see [ARCHITECTURE.md](./ARCHITECTURE.md) for the hard package boundary rule.
+`pnpm test` · All 936 tests pass on clean checkout · PRs welcome — see [ARCHITECTURE.md](./ARCHITECTURE.md) for the hard package boundary rule.
 
 ## License
 

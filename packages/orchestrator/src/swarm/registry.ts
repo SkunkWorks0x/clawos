@@ -37,7 +37,7 @@ export function defaultRegistry(): AgentRegistry {
   r.register({ name: "masterchief", role: "commander", capabilities: ["dispatch", "reflect"] });
   r.register({ name: "forge", role: "builder", capabilities: ["scaffold", "init"] });
   r.register({ name: "blade", role: "security", capabilities: ["scan", "audit"] });
-  r.register({ name: "cortana", role: "intelligence", capabilities: ["analyze", "recall"] });
+  r.register({ name: "oracle", role: "intelligence", capabilities: ["analyze", "recall"] });
   r.register({ name: "arbiter", role: "policy", capabilities: ["evaluate", "approve"] });
   return r;
 }

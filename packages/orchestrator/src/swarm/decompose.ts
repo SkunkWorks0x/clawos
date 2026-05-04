@@ -34,14 +34,14 @@ export function decompose(task: string): Subtask[] {
   });
 }
 
-export const FOLLOWUP_AGENT = "cortana";
+export const FOLLOWUP_AGENT = "oracle";
 
 /** The single follow-up subtask dispatched after reflection. */
 export function followupSubtask(): Subtask {
   return {
     agent: FOLLOWUP_AGENT,
     action: "synthesize",
-    description: "cortana: synthesize next-step from reflection",
+    description: "oracle: synthesize next-step from reflection",
     amount: 50,
     elevated: false,
   };
