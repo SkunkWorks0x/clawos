@@ -6,7 +6,7 @@ import { generateKeyPairSync, sign as cryptoSign, randomUUID } from "node:crypto
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import { performance } from "node:perf_hooks";
 
 import { execute, type AgentRequest, type ClawosPolicySet } from "../index.js";
@@ -21,6 +21,8 @@ const MEMORY_CLI = resolve(REPO_ROOT, "packages", "memory", "cli.py");
 const MEMORY_VENV = resolve(REPO_ROOT, "packages", "memory", ".venv", "bin", "python3");
 
 const DEFAULT_TASK = "demo: audit trading agent portfolio rebalance — $50K threshold";
+const DEMO_AGENT_ID = "demo-agent";
+const DEMO_DB_PATH = resolve(homedir(), ".clawos", "agents", DEMO_AGENT_ID, "memory.db");
 
 const DEFAULT_POLICY: ClawosPolicySet = {
   maxTransactionAmount: 500,
@@ -67,10 +69,12 @@ export async function runSwarm(options: SwarmOptions = {}): Promise<SwarmResult>
     cadenceMs: options.cadenceMs ?? 90,
   });
 
+  const usingDemoDefault = !options.workDir;
   const workDir = options.workDir ?? resolve(tmpdir(), `clawos-swarm-${sessionId}`);
   mkdirSync(workDir, { recursive: true });
   scaffoldClean(workDir, sessionId);
-  const dbPath = resolve(workDir, "swarm.db");
+  const dbPath = usingDemoDefault ? DEMO_DB_PATH : resolve(workDir, "swarm.db");
+  mkdirSync(dirname(dbPath), { recursive: true });
 
   const { privateKey, publicKey } = generateKeyPairSync("ed25519");
   const privatePem = privateKey.export({ type: "pkcs8", format: "pem" }) as string;
@@ -83,11 +87,22 @@ export async function runSwarm(options: SwarmOptions = {}): Promise<SwarmResult>
       cliPath: MEMORY_CLI,
       pythonPath: MEMORY_VENV,
       dbPath,
-      agentId: `swarm-${sessionId}`,
+      agentId: DEMO_AGENT_ID,
     });
   }
 
   await log.header(`ClawOS swarm — ${task}`, sessionId);
+
+  let priorMemos = 0;
+  if (shimAvailable) {
+    const priorStats = shim.call({ op: "stats", agent_id: DEMO_AGENT_ID });
+    priorMemos = (priorStats.stats?.total_active_memories as number) ?? 0;
+    if (priorMemos > 0) {
+      await log.note(
+        `context: ${priorMemos} memo${priorMemos === 1 ? "" : "s"} from prior session${priorMemos === 1 ? "" : "s"}`,
+      );
+    }
+  }
 
   const subtasks = decompose(task);
   const t0 = performance.now();
@@ -112,11 +127,11 @@ export async function runSwarm(options: SwarmOptions = {}): Promise<SwarmResult>
     if (sub.elevated) {
       await log.flag("flagged: elevated scope — escalated to masterchief — approved with audit trail");
     }
-    await log.step(
-      sub.agent,
-      `${sub.description}${result.blocked ? " — BLOCKED" : ""}`,
-      durationMs,
-    );
+    let label = `${sub.description}${result.blocked ? " — BLOCKED" : ""}`;
+    if (sub.agent === "blade" && result.scan) {
+      label += ` — ${result.scan.score}/100, ${result.scan.findings} finding${result.scan.findings === 1 ? "" : "s"}`;
+    }
+    await log.step(sub.agent, label, durationMs);
     steps.push({
       subtask: sub,
       blocked: result.blocked,
@@ -129,7 +144,20 @@ export async function runSwarm(options: SwarmOptions = {}): Promise<SwarmResult>
   let reflectionIds: string[] = [];
   let reflectionOk = false;
   if (shimAvailable) {
-    const refl = shim.call({ op: "reflect" });
+    shim.call({
+      op: "capture",
+      agent_id: DEMO_AGENT_ID,
+      action: "swarm-session",
+      outcome: "success",
+      details: {
+        session: sessionId,
+        task,
+        dispatches: subtasks.length,
+        flagged: steps.filter((s) => s.flagged).length,
+        blocked: steps.filter((s) => s.blocked).length,
+      },
+    });
+    const refl = shim.call({ op: "reflect", agent_id: DEMO_AGENT_ID });
     reflectionOk = refl.ok;
     reflectionIds = refl.reflection_ids ?? [];
   }
@@ -183,6 +211,10 @@ function scaffoldClean(dir: string, sessionId: string): void {
   writeFileSync(resolve(dir, "package.json"), JSON.stringify({ name: `swarm-${sessionId}` }));
   writeFileSync(resolve(dir, ".gitignore"), ".env\n*.key\n*.pem\nnode_modules/\n");
   writeFileSync(resolve(dir, "package-lock.json"), '{"lockfileVersion":3}');
+  writeFileSync(
+    resolve(dir, "agent-config.py"),
+    "# Agent config — deliberately leaves a credential exposed to demonstrate Sentinel.\nAWS_ACCESS_KEY = \"AKIA1234567890ABCDEF\"\n",
+  );
 }
 
 interface BuildArgs {

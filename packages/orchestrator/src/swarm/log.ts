@@ -64,4 +64,9 @@ export class SwarmLogger {
     this.write(chalk.bold.green(line));
     this.write("");
   }
+
+  async note(line: string): Promise<void> {
+    this.write(`  ${chalk.dim(line)}`);
+    await this.pulse();
+  }
 }
