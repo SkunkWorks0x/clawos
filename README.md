@@ -44,7 +44,44 @@ pnpm test  # 936 tests, 0 failures
 ## Demo
 
 ```bash
-pnpm demo  # clawos init → Sentinel scan → policy-approved tx → memory reflection
+$ npx clawos swarm
+
+ClawOS swarm — demo: audit trading agent portfolio rebalance — $50K threshold
+  session 1204b042  2026-05-04T09:20:51.984Z
+
+  ✓ forge          forge: scaffold (29.7ms)
+  ⚠ flagged: elevated scope — escalated to masterchief — approved with audit trail
+  ✓ blade          blade: scan — 85/100, 1 finding (37.2ms)
+  ✓ masterchief    masterchief: approve (53.0ms)
+  ✓ masterchief    reflect (1 memo)
+
+  ↻ Self-directed iteration: 1 follow-up dispatched from reflection
+  ✓ oracle         oracle: synthesize next-step from reflection (40.7ms)
+  oracle: Archive session 1204b042 as a clean audit-approved precedent and update the policy rulebook to note that portfolio rebalance actions at the $50K threshold require elevated-scope approval with mandatory audit trail, reducing future flag-to-approval latency.
+
+swarm complete — 4 dispatches, 1 reflection, 4716.7ms
+
+  4 dispatches · 0 blocked · 1 flagged · 1 reflection
+
+$ npx clawos swarm
+
+ClawOS swarm — demo: audit trading agent portfolio rebalance — $50K threshold
+  session 75d4bb3e  2026-05-04T09:21:02.903Z
+
+  context: 2 memos from prior sessions
+  ✓ forge          forge: scaffold (50.5ms)
+  ⚠ flagged: elevated scope — escalated to masterchief — approved with audit trail
+  ✓ blade          blade: scan — 85/100, 1 finding (42.4ms)
+  ✓ masterchief    masterchief: approve (61.7ms)
+  ✓ masterchief    reflect (1 memo)
+
+  ↻ Self-directed iteration: 1 follow-up dispatched from reflection
+  ✓ oracle         oracle: synthesize next-step from reflection (41.0ms)
+  oracle: Archive session 75d4bb3e to the audit ledger with the confirmed fields: Sentinel score 85/100, 0 findings, 1 policy flag, masterchief approval logged, 3 dispatches, 0 blocks, outcome success. Update the rolling pattern summary to 3 entries and flag the repeated elevated-scope approval pattern for periodic policy review.
+
+swarm complete — 4 dispatches, 1 reflection, 4430.2ms
+
+  4 dispatches · 0 blocked · 1 flagged · 1 reflection
 ```
 
 ![ClawOS Demo](https://raw.githubusercontent.com/SkunkWorks0x/clawos/main/docs/demo.gif)
