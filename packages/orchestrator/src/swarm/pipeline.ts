@@ -14,6 +14,7 @@ import { defaultRegistry, type AgentRegistry } from "./registry.js";
 import { decompose, followupSubtask, type Subtask } from "./decompose.js";
 import { SwarmShim } from "./shim.js";
 import { SwarmLogger } from "./log.js";
+import { synthesizeNextStep } from "./synthesize.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..", "..", "..", "..");
@@ -187,6 +188,25 @@ export async function runSwarm(options: SwarmOptions = {}): Promise<SwarmResult>
     `${followup.description}${fResult.blocked ? " — BLOCKED" : ""}`,
     fDurationMs,
   );
+
+  if (usingDemoDefault && shimAvailable) {
+    const recent = shim.call({ op: "retrieve", agent_id: DEMO_AGENT_ID, limit: 5 });
+    const priorMemos = (recent.memories ?? [])
+      .map((m) => (typeof m.content === "string" ? m.content : JSON.stringify(m.content)))
+      .filter((s): s is string => Boolean(s) && s.length > 0)
+      .slice(0, 5);
+    const bladeStep = steps.find((s) => s.subtask.agent === "blade");
+    const synthesis = await synthesizeNextStep({
+      task,
+      scanScore: bladeStep?.score ?? null,
+      scanFindings: null,
+      flagged: steps.some((s) => s.flagged),
+      priorMemos,
+    });
+    if (synthesis) {
+      await log.note(`oracle: ${synthesis}`);
+    }
+  }
 
   const totalMs = performance.now() - t0;
   await log.summary(
